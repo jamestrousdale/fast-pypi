@@ -1,2 +1,3 @@
-# fastpypi
-FastAPI-based 
+# fast-pypi
+
+FastAPI-based pypi server
