@@ -4,7 +4,8 @@ WORKDIR /root/
 RUN apt-get update && apt-get install -y make git jq curl
 RUN python3 -m venv /opt/venv \
   && . /opt/venv/bin/activate \
-  && /opt/venv/bin/pip3 install poetry
+  && /opt/venv/bin/pip3 install poetry \
+  && poetry config virtualenvs.create false
 ENV PATH=/opt/venv/bin:${PATH}
-COPY pyproject.toml poetry.lock /root/
+COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-root

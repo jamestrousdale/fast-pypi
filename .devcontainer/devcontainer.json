@@ -9,17 +9,27 @@
         "terminal.integrated.profiles.linux": {
           "bash": {
             "path": "/bin/bash"
-          },
-          "emeraldwalk.runonsave": {
-            "commands": [
-              {
-                "match": "\\.py$",
-                "cmd": "isort ${file}"
-              }
-            ]
           }
         },
         "terminal.integrated.defaultProfile.linux": "bash",
+        "python.defaultInterpreterPath": "/opt/venv/bin/python3",
+        "python.pythonPath": "/workspaces/fast-pypi",
+        "python.languageServer": "Pylance",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.linting.mypyEnabled": true,
+        "shellcheck.customArgs": [
+          "--source-path=SCRIPTDIR",
+          "--external-sources"
+        ],
+        "emeraldwalk.runonsave": {
+          "commands": [
+            {
+              "match": "\\.py$",
+              "cmd": "isort ${file}"
+            }
+          ]
+        },
         "editor.rulers": [
           80,
           120
@@ -38,10 +48,13 @@
   "mounts": [
     "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
   ],
+  "containerEnv": {
+    "FAST_PYPI_DATA_DIR": "/tmp/fast-pypi-data"
+  },
   "runArgs": [
     "--rm"
   ],
   "remoteUser": "root",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "postStartCommand": "mkdir -p /tmp/fast-pypi-data && git config --global --add safe.directory ${containerWorkspaceFolder}",
   "shutdownAction": "stopContainer"
 }
