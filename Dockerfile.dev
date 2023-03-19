@@ -1,0 +1,10 @@
+FROM python:3.10-slim
+
+WORKDIR /root/
+RUN apt-get update && apt-get install -y make git jq curl
+RUN python3 -m venv /opt/venv \
+  && . /opt/venv/bin/activate \
+  && /opt/venv/bin/pip3 install poetry
+ENV PATH=/opt/venv/bin:${PATH}
+COPY pyproject.toml poetry.lock /root/
+RUN poetry install --no-root

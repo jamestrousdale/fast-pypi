@@ -1,0 +1,47 @@
+{
+  "name": "fast-pypi",
+  "build": {
+    "dockerfile": "../Dockerfile.dev"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          },
+          "emeraldwalk.runonsave": {
+            "commands": [
+              {
+                "match": "\\.py$",
+                "cmd": "isort ${file}"
+              }
+            ]
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.rulers": [
+          80,
+          120
+        ]
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "EditorConfig.EditorConfig",
+        "timonwong.shellcheck",
+        "emeraldwalk.RunOnSave"
+      ]
+    }
+  },
+  "mounts": [
+    "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
+  ],
+  "runArgs": [
+    "--rm"
+  ],
+  "remoteUser": "root",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "shutdownAction": "stopContainer"
+}
